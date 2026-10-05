@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS t_secre_carrier (
   lack_num int DEFAULT NULL COMMENT '还差几件（轧出来，不手填）',
   content varchar(255) DEFAULT NULL COMMENT '随件交来的载体题名与要件',
   status int DEFAULT NULL COMMENT '册面情形 0新入册 1已收齐 2缺项',
+  warn_level int DEFAULT NULL COMMENT '届期提醒层级 1一级(掐得最紧) 2二级 3三级；够不上三条线为 NULL（不提醒）',
+  warn_rule_code varchar(64) DEFAULT NULL COMMENT '判级当口作数的那条线代号（钉档，留得追）',
+  warn_eff_date datetime DEFAULT NULL COMMENT '那条线的起用那一日（钉档，留得追）',
   del_flag int DEFAULT '0' COMMENT '删除标记 0正常 1删除',
   create_by varchar(64) DEFAULT NULL COMMENT '创建者',
   create_time datetime DEFAULT NULL COMMENT '创建时间',
@@ -134,3 +137,9 @@ INSERT IGNORE INTO t_secre_org_book (id, book_no, book_name, book_kind, road_nam
 VALUES (0, 'ML00', '浔州区谷城街道·中共谷城市委机关（机关类，在册）', '机关', '浔州省—谷城市—浔州区—谷城街道', 0, 0, 'seed', NOW()),
        (1, 'ML01', '北塔区岭南区·市测绘院下属资料室（已并走撤出）', '事业单位', '浔州省—谷城市—北塔区—岭南街道', 1, 0, 'seed', NOW());
 
+
+-- 存量库补列（已建过 t_secre_carrier 的库执行；列已在时忽略报错）
+ALTER TABLE t_secre_carrier
+  ADD COLUMN warn_level int DEFAULT NULL COMMENT '届期提醒层级 1一级(掐得最紧) 2二级 3三级；够不上三条线为 NULL（不提醒）' AFTER status,
+  ADD COLUMN warn_rule_code varchar(64) DEFAULT NULL COMMENT '判级当口作数的那条线代号（钉档，留得追）' AFTER warn_level,
+  ADD COLUMN warn_eff_date datetime DEFAULT NULL COMMENT '那条线的起用那一日（钉档，留得追）' AFTER warn_rule_code;

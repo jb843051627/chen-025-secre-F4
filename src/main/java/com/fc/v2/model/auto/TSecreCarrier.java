@@ -76,6 +76,22 @@ public class TSecreCarrier implements Serializable {
     @ApiModelProperty(value = "册面情形 0新入册 1已收齐 2缺项")
     private Integer status;
 
+    /** 届期提醒层级 1一级(掐得最紧) 2二级 3三级；够不上三条线为 NULL（不提醒） */
+    @TableField("warn_level")
+    @ApiModelProperty(value = "届期提醒层级 1一级(掐得最紧) 2二级 3三级；够不上三条线为 NULL（不提醒）")
+    private Integer warnLevel;
+
+    /** 判级当口作数的那条线代号（钉档，留得追） */
+    @TableField("warn_rule_code")
+    @ApiModelProperty(value = "判级当口作数的那条线代号（钉档，留得追）")
+    private String warnRuleCode;
+
+    /** 那条线的起用那一日（钉档，留得追） */
+    @TableField("warn_eff_date")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @ApiModelProperty(value = "那条线的起用那一日（钉档，留得追）")
+    private java.util.Date warnEffDate;
+
     /** 删除标记 0正常 1删除 */
     @TableField("del_flag")
     @ApiModelProperty(value = "删除标记 0正常 1删除")
@@ -186,6 +202,30 @@ public class TSecreCarrier implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getWarnLevel() {
+        return warnLevel;
+    }
+
+    public void setWarnLevel(Integer warnLevel) {
+        this.warnLevel = warnLevel;
+    }
+
+    public String getWarnRuleCode() {
+        return warnRuleCode;
+    }
+
+    public void setWarnRuleCode(String warnRuleCode) {
+        this.warnRuleCode = warnRuleCode;
+    }
+
+    public java.util.Date getWarnEffDate() {
+        return warnEffDate;
+    }
+
+    public void setWarnEffDate(java.util.Date warnEffDate) {
+        this.warnEffDate = warnEffDate;
     }
 
     public Integer getDelFlag() {
